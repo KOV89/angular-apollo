@@ -1,0 +1,42 @@
+:root {
+  --primary-background-color: rgba(229, 229, 229, 0.2);
+  --primary-text-color: rgba(0, 0, 0, 0.87);
+  --secondary-background-color: #FFFFFF;
+  --secondary-text-color: #2962FF;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--primary-background-color);
+  color: var(--primary-text-color);
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  padding: 0;
+  color: var(--primary-text-color);
+  font-style: normal;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 33px;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 23px;
+}
+
+.spinner-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+

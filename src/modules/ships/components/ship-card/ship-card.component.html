@@ -1,0 +1,25 @@
+<div class="back-button" (click)="goBack()">
+  <i class="material-icons">arrow_back</i>
+  Вернуться
+</div>
+<ng-container *ngIf="ship; else spinner">
+  <h1 class="title">
+    {{ship.name}}
+  </h1>
+  <div class="info">
+    <app-info-cell [name]="'Тип'" [value]="ship.type"></app-info-cell>
+    <app-info-cell [name]="'Порт'" [value]="ship.home_port"></app-info-cell>
+    <app-info-cell [name]="'Вес'" [value]="ship.weight_kg"></app-info-cell>
+    <app-info-cell [name]="'Год'" [value]="ship.year_built"></app-info-cell>
+    <div class="missions">
+      <div class="name">Миссии</div>
+      <div class="value">{{getMissions()}}</div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #spinner>
+  <div class="spinner-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

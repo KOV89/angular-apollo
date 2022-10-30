@@ -1,0 +1,13 @@
+<button
+  class="material-icons page-selector__button"
+  (click)="decrement()"
+  [disabled]="disableButtons || page === 1">
+  chevron_left
+</button>
+<div class="page-selector__page">{{ page }}</div>
+<button
+  class="material-icons page-selector__button"
+  (click)="increment()"
+  [disabled]="disableButtons || page === lastPage">
+  chevron_right
+</button>

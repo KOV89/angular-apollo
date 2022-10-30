@@ -1,0 +1,106 @@
+<!-- Блок списка -->
+<div class="ships">
+  <h1 class="ships-title">SpaceX Ships</h1>
+  <!-- Список кораблей -->
+  <div class="ships-list">
+    <ng-container *ngIf="ships.has(page); else spinner">
+      <ng-container *ngIf="ships.get(page)?.length; else notFound">
+        <ng-container
+          *ngFor="let ship of ships.get(page)"
+          [ngTemplateOutlet]="card"
+          [ngTemplateOutletContext]="{ship: ship}">
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+  <!-- Пагинация -->
+  <app-page-selector [(page)]="page" [lastPage]="lastPage"></app-page-selector>
+</div>
+
+<!-- Блок фильтров -->
+<div class="filters">
+  <!-- Заголовок с кнопкой очистки -->
+  <h3 class="filters-title">
+    Фильтры
+    <span
+      class="material-icons"
+      [style.visibility]="isFilterActive() ? 'visible' : 'hidden'"
+      (click)="clearFilters()">
+      clear
+    </span>
+  </h3>
+  <!-- Фильтры -->
+  <div class="filters-list">
+    <ng-container [ngTemplateOutlet]="nameFilter"></ng-container>
+    <ng-container [ngTemplateOutlet]="portFilter"></ng-container>
+    <ng-container [ngTemplateOutlet]="typeFilter"></ng-container>
+  </div>
+</div>
+
+<!-- Карточка корабля -->
+<ng-template #card let-ship="ship">
+  <div class="card">
+    <div class="card-title">
+      <h2>{{ship.name}}</h2>
+      <i class="material-icons" [routerLink]="ship.id">arrow_forward</i>
+    </div>
+    <div class="card-info">
+      <app-info-cell [name]="'Тип'" [value]="ship.type"></app-info-cell>
+      <app-info-cell [name]="'Порт'" [value]="ship.home_port"></app-info-cell>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Фильтр по названию -->
+<ng-template #nameFilter>
+  <mat-form-field class="filter">
+    <input id="ship-search" [(ngModel)]="filters.name" placeholder="Название" matInput>
+  </mat-form-field>
+</ng-template>
+
+<!-- Фильтр по портам -->
+<ng-template #portFilter>
+  <mat-form-field class="filter">
+    <mat-label id="port-label">Порт</mat-label>
+    <mat-select
+      id="ship-ports"
+      panelClass="ship-list_filters_port"
+      aria-labelledby="port-label"
+      [(ngModel)]="filters.home_port"
+      multiple
+      disableOptionCentering
+    > <!-- Отображение выбранных значений -->
+      <mat-select-trigger>
+        <span *ngIf="filters.home_port.length === 1">{{ filters.home_port[0] }}</span>
+        <span *ngIf="filters.home_port.length > 1">{{ 'Выбраны ' + filters.home_port.length }}</span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let port of ports" [value]="port">
+        {{port}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+
+<!-- Фильтр по типу -->
+<ng-template #typeFilter>
+  <div class="filter type">
+    <label id="type-label">Тип</label>
+    <mat-radio-group [(ngModel)]="filters.type" aria-labelledby="type-label" >
+      <mat-radio-button *ngFor="let type of types" [value]="type" color="primary">
+        {{type}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+</ng-template>
+
+<ng-template #notFound>
+  <div class="not-found">
+    <h2>Ships not found...</h2>
+  </div>
+</ng-template>
+
+<ng-template #spinner>
+  <div class="spinner-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
